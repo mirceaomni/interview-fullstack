@@ -28,13 +28,10 @@ const authenticated = (req, res, next) => {
 // endpoints
 app.post("/login", jsonParser, (req, res) => {
   const { email, password } = req.body;
-  const user = users.find(
-    (user) => user.email === email && user.password === password,
-  );
-  if (!user) {
-    return res.status(401).json({ message: "Invalid email or password" });
-  }
-  const token = jwt.sign({ user_id: user.id }, secret);
+
+  // TODO: check email and password and get user id from db
+  const userId = 1;
+  const token = jwt.sign({ user_id: userId }, secret);
   const cookieOptions = {
     httpOnly: true,
     secure: true,
@@ -43,7 +40,7 @@ app.post("/login", jsonParser, (req, res) => {
     path: "/",
   };
   res.cookie("access_token", token, cookieOptions);
-  res.status(200).json({ message: "Logged in successfully" });
+  res.status(200).json({ user_id: userId });
 });
 
 app.get("/", (req, res) => {
