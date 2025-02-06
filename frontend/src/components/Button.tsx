@@ -1,8 +1,13 @@
 type ButtonProps = {
   children: React.ReactNode;
-  onClick: () => void;
-}
+  onClick?: () => void;
+  type: "submit" | "button";
+};
 
-export const Button = ({ children, onClick }: ButtonProps) => {
-  return <button onClick={onClick}>{children}</button>;
+export const Button = ({ children, onClick, type }: ButtonProps) => {
+  return (
+    <button type={type} onClick={onClick}>
+      {children}
+    </button>
+  );
 };

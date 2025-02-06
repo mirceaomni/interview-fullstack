@@ -1,11 +1,19 @@
 type InputProps = {
   value: string;
   placeholder: string;
+  ariaLabel: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
+};
 
-export const Input = ({ value, placeholder, onChange }: InputProps) => {
+export const Input = (props: InputProps) => {
+  const { value, ariaLabel, placeholder, onChange } = props;
+
   return (
-    <input placeholder={placeholder} value={value} onChange={onChange}></input>
+    <input
+      aria-label={ariaLabel}
+      placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+    ></input>
   );
 };
