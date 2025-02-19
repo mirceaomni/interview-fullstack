@@ -3,9 +3,16 @@ import './App.css'
 import { Input } from './components/Input'
 import { Button } from './components/Button'
 
+// const useAppLogic =
+
 // TODO: implement the signin form
 function App() {
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState('');
+  const [formState, setFormState] = useState({
+    email: '',
+    password: '',
+  });
+
   const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   }, []);
@@ -16,9 +23,12 @@ function App() {
 
   return (
     <div className='App'>
-      <h2>Signin Form</h2>
-      <Input placeholder={'john@doe.com'} value={email} onChange={handleChange}></Input>
-      <Button onClick={customAlert}>Signin</Button>
+      <h2>Sign-in Form</h2>
+      <form onSubmit={customAlert}>
+        <Input type={'email'} placeholder={'john@doe.com'} value={email} onChange={handleChange}></Input><br />
+        <Input type={'password'} value={email} onChange={handleChange}></Input><br />
+        <Button onClick={customAlert}>Signin</Button>
+      </form>
     </div>
   )
 }

@@ -29,8 +29,32 @@ const authenticated = (req, res, next) => {
 app.post("/login", jsonParser, (req, res) => {
   const { email, password } = req.body;
 
-  // TODO: check email and password and get user id from db
-  const userId = 1;
+  if (!email || typeof email !== 'string' || !email.includes('@')) {
+    return res.status(401).json({
+      errors: {
+        email: 'The provided email is not valid',
+      }
+    });
+  }
+
+  const matchedUser = users.find(user => user.email === email);
+  if (!matchedUser) {
+    return res.status(401).json({
+      errors: {
+        email: 'The email or password is not valid',
+      }
+    });
+  }
+
+  if (matchedUser.password !== password) {
+    return res.status(401).json({
+      errors: {
+        email: 'The email or password is not valid',
+      }
+    });
+  }
+
+  const userId = matchedUser.id;
   const token = jwt.sign({ user_id: userId }, secret);
   const cookieOptions = {
     httpOnly: true,

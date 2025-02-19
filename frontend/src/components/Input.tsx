@@ -1,11 +1,12 @@
 type InputProps = {
   value: string;
-  placeholder: string;
+  type: 'email' | 'password';
+  placeholder?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const Input = ({ value, placeholder, onChange }: InputProps) => {
+export const Input = ({ value, type, placeholder, onChange }: InputProps) => {
   return (
-    <input placeholder={placeholder} value={value} onChange={onChange}></input>
+    <input type={type} placeholder={placeholder} value={value} onChange={onChange}></input>
   );
 };
