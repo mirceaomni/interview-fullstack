@@ -30,7 +30,9 @@ app.post("/login", jsonParser, (req, res) => {
   const { email, password } = req.body;
 
   // TODO: check email and password and get user id from db
-  const userId = 1;
+  let user = users.find((user) => user.email === email && user.password === password);
+console.log(user);
+  const userId = user.id;
   const token = jwt.sign({ user_id: userId }, secret);
   const cookieOptions = {
     httpOnly: true,
