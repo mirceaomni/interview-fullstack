@@ -25,12 +25,39 @@ const authenticated = (req, res, next) => {
   next();
 };
 
+const increment = () => {
+  let count = 0
+
+  const incrementCount = () => {
+    count+=1
+  }
+  
+  return incrementCount
+}
+
+increment()
+
+
+
+
 // endpoints
 app.post("/login", jsonParser, (req, res) => {
   const { email, password } = req.body;
-
+  
   // TODO: check email and password and get user id from db
-  const userId = 1;
+  
+  const userData = users.find(item => item.email === email);
+
+  if (!userData) {
+    return res.status(401).json({message: "user not found"})
+  }
+
+  const userId = userData.id
+
+  if (password !== userData.password) {
+    return res.status(401).json({message: "credentials not correct"})
+  }
+
   const token = jwt.sign({ user_id: userId }, secret);
   const cookieOptions = {
     httpOnly: true,
